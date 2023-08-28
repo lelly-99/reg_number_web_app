@@ -1,0 +1,29 @@
+<h1>Registration Numbers</h1>
+<form action="/" method="POST">
+    <div class="centerDiv">
+        <label for="enteredRegistrationNumber">Registration Number: </label>
+        <input type="text" name="" value="" class="enteredRegistrationNumber">
+    </div>
+    <div class="centerDiv">
+        <button class="addButton" type="submit" name="button" >Add</button>
+    </div>
+    {{!-- <div class="centerDiv">
+        <select class="dropDown">
+            <option value="selectTown">Select Town</option>
+            <option value="CA">Cape Town</option>
+            <option value="CY">Bellville</option>
+            <option value="CJ">Paarl</option>
+          </select>
+    </div> --}}
+      <div class="centerDiv">
+    <ul>
+      {{#each registrations}}
+        <li>{{this}}</li>
+      {{/each}}
+    </ul>
+  </div>
+</form>
+
+
+
+
