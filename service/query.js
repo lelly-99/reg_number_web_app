@@ -1,39 +1,154 @@
+// const query = (db) => {
+//   const insertReg = async (registration, townId) => {
+//     await db.none(
+//       "insert into registration_numbers (registration_plate, town_id) values ($1, $2)",
+//       [registration, townId]
+//     );
+//   };
+//   // Modify your selectTowns function to return the integer id
+// const selectTowns = async (townCode) => {
+//   const result = await db.oneOrNone("SELECT id FROM towns WHERE town_code = $1", [townCode]);
+//   return result ? result.id : null;
+// };
+
+  
+//   const filterByTown = async (townId) => {
+//     return await db.manyOrNone(
+//       "SELECT registration_plate FROM registration_numbers WHERE town_id = $1",
+//       [townId]
+//     );
+//   };
+
+//   const insertRegistrationWithTown = async (registration, townId) => {
+//     try {
+//       await db.none(
+//         "INSERT INTO registration_numbers (registration_plate, town_id) VALUES ($1, $2)",
+//         [registration, townId]
+//       );
+//     } catch (error) {
+//       throw error;
+//     }
+//   };
+  
+  
+//   const getRegistrationByNumber = async (registrationNumber) => {
+//     return await db.manyOrNone(
+//       "SELECT registration_plate FROM registration_numbers WHERE registration_plate = $1",
+//       [registrationNumber]
+//     );
+//   };
+  
+//   return {
+//     insertReg,
+//     selectTowns,
+//     filterByTown,
+//     insertRegistrationWithTown,
+//     getRegistrationByNumber
+//   };
+// };
+
+// export default query;
+
+// const query = (db) => {
+//   const insertReg = async (registration, townId) => {
+//       await db.none(
+//           "insert into registration_numbers (registration_plate, town_id) values ($1, $2)",
+//           [registration, townId]
+//       );
+//   };
+
+//   // Modify your selectTowns function to return the integer id
+//   const selectTowns = async (townCode) => {
+//       const result = await db.oneOrNone("SELECT id FROM towns WHERE town_code = $1", [townCode]);
+//       return result ? result.id : null;
+//   };
+
+//   const filterByTown = async (townId) => {
+//       return await db.manyOrNone(
+//           "SELECT registration_plate FROM registration_numbers WHERE town_id = $1",
+//           [townId]
+//       );
+//   };
+
+//   const insertRegistrationWithTown = async (registration, townId) => {
+//       try {
+//           await db.none(
+//               "INSERT INTO registration_numbers (registration_plate, town_id) VALUES ($1, $2)",
+//               [registration, townId]
+//           );
+//       } catch (error) {
+//           throw error;
+//       }
+//   };
+
+//   const getRegistrationByNumber = async (registrationNumber) => {
+//       return await db.manyOrNone(
+//           "SELECT registration_plate FROM registration_numbers WHERE registration_plate = $1",
+//           [registrationNumber]
+//       );
+//   };
+
+//   return {
+//       insertReg,
+//       selectTowns,
+//       filterByTown,
+//       insertRegistrationWithTown,
+//       getRegistrationByNumber
+//   };
+// };
+
+// export default query;
+
 const query = (db) => {
-  const insert = async (name) => {
-    await db.none(
-      "insert into names (greetedNames, greetCount) values ($1, $2)",
-      [name, 1]
+  const insertReg = async (registration) => {
+    const townCode = registration.substring(0, 2); // Extract town_code from registration_plate
+    const townId = await selectTowns(townCode);
+    if (townId) {
+      await db.none(
+        "INSERT INTO registration_numbers (registration_plate, town_code, town_id) VALUES ($1, $2, $3)",
+        [registration, townCode, townId]
+      );
+    } else {
+      throw new Error("Town not found for registration plate.");
+    }
+  };
+
+  const selectTowns = async (townCode) => {
+    const result = await db.oneOrNone("SELECT id FROM towns WHERE town_code = $1", [townCode]);
+    return result ? result.id : null;
+  };
+
+  const filterByTown = async (townId) => {
+    return await db.manyOrNone(
+      "SELECT registration_plate FROM registration_numbers WHERE town_id = $1",
+      [townId]
     );
   };
 
-  const updateCount = async () => {
-    return await db.oneOrNone(
-      "select count (distinct greetedNames) From names"
+  const getRegistrationByNumber = async (registrationNumber) => {
+    return await db.manyOrNone(
+      "SELECT registration_plate FROM registration_numbers WHERE registration_plate = $1",
+      [registrationNumber]
     );
   };
 
-  const count = async (name) => {
-    return await db.oneOrNone(
-      "select sum(greetcount) from names where greetedNames = $1",
-      [name]
-    );
-  };
-
-  const greeted = async () => {
-    return await db.any("select distinct greetedNames from names");
+  const getAllRegistrations = async () => {
+    return await db.manyOrNone("SELECT registration_plate FROM registration_numbers");
   };
 
   const reset = async () => {
-    await db.none("delete from names");
+    await db.none("delete from registration_numbers");
   };
 
   return {
-    insert,
-    updateCount,
-    greeted,
+    insertReg,
+    selectTowns,
+    filterByTown,
+    getRegistrationByNumber,
+    getAllRegistrations,
     reset,
-    count,
   };
 };
 
 export default query;
+

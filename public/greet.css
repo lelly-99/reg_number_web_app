@@ -1,9 +1,12 @@
 .plate {
-    background-color: #c6ced5;
-    border-radius: 17px;
-    height: 50px;
-    width: 260px;
-    border: 3.5px solid;
+    background-color: grey;
+    border-radius: 15px;
+    height: 35px;
+    width: 200px;
+    margin: 10px;
+    border: 3.5px solid black;
+    color: black;
+    text-align: center;
 }
 
 h1 {
@@ -14,13 +17,6 @@ div {
     margin-top: 20px;
 }
 
-.enteredRegistrationNumber {
-    height: 22px;
-    width: 250px;
-    border-radius: 6px;
-    border: none;
-}
-
 .centerDiv {
     display: flex;
     justify-content: center;
@@ -28,13 +24,12 @@ div {
 }
 
 .addButton, .showButton {
-    font-size: 16px;
-    padding: 10px 55px;
-    border-radius: 17px;
-    background-color: cyan;
+    padding: 3px 22px;
+    border-radius: 3px;
     border: none;
+    background-color: rgb(11, 149, 149);
+    color: black;
 }
-
 
 ul {
     list-style: none;
@@ -43,10 +38,13 @@ ul {
   }
 
 select {
-    height: 40px; 
-    width: 410px;
+    height: 30px; 
+    width: 250px;
     text-align: center;
     font-weight: bolder;
-    font-size: 20px;
-    border-radius: 15px;
   }
+
+  .red {
+    color: red;
+    font-size: large;
+}

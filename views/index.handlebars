@@ -1,28 +1,93 @@
+{{!-- 
+<script>
+      setTimeout(function() {
+        document.querySelector('.red').innerHTML = '';
+      }, 3000);
+    </script>
 <h1>Registration Numbers</h1>
 <form action="/" method="POST">
+<div class="centerDiv">
+         <p class="red">{{messages.error}}</p>
+</div>
     <div class="centerDiv">
         <label for="enteredRegistrationNumber">Registration Number: </label>
-        <input type="text" name="" value="" class="enteredRegistrationNumber">
+        <input type="text" name="registration_plate" value="" class="enteredRegistrationNumber" placeholder="CA 123">
     </div>
     <div class="centerDiv">
-        <button class="addButton" type="submit" name="button" >Add</button>
+        <button class="addButton" type="submit">Add</button>
     </div>
-    {{!-- <div class="centerDiv">
-        <select class="dropDown">
+</form>
+    <div class="centerDiv">
+    <form action="/" method="POST">
+        <select class="dropDown" name="town">
             <option value="selectTown">Select Town</option>
             <option value="CA">Cape Town</option>
             <option value="CY">Bellville</option>
             <option value="CJ">Paarl</option>
+            <option value="CL">Stellenbosch</option>
           </select>
-    </div> --}}
-      <div class="centerDiv">
+    <button class="addButton" type="submit">Filter</button>
+    </form>
+    </div>
+    <form action="reg_number">
+    <div class="centerDiv">
     <ul>
-      {{#each registrations}}
-        <li>{{this}}</li>
-      {{/each}}
+      <ul>
+  {{#each registrations}}
+    <li class="plate">{{this.registration_plate}}</li>
+  {{/each}}
+</ul>
     </ul>
   </div>
+    </form> --}}
+
+<h1>Registration Numbers</h1>
+<form action="/" method="POST">
+    <div class="centerDiv">
+        <p class="red">{{messages.error}}</p>
+    </div>
+    <div class="centerDiv">
+        <label for="enteredRegistrationNumber">Registration Number: </label>
+        <input type="text" name="registration_plate" value="" class="enteredRegistrationNumber" placeholder="CA 123 456">
+    </div>
+    <div class="centerDiv">
+        <button class="addButton" type="submit">Add</button>
+    </div>
 </form>
+<form action="reset" method="POST">
+<div class="centerDiv">
+        <button class="addButton" type="submit">Clear</button>
+    </div>
+</form>
+<div class="centerDiv">
+    <form action="/" method="POST">
+        <select class="dropDown" name="town">
+            <option value="selectTown">Select Town</option>
+            <option value="CA">Cape Town</option>
+            <option value="CY">Bellville</option>
+            <option value="CJ">Paarl</option>
+            <option value="CL">Stellenbosch</option>
+        </select>
+        <button class="addButton" type="submit">Filter</button>
+    </form>
+</div>
+<form action="/reg_number">
+    <div class="centerDiv">
+        <ul>
+            {{#each registrations}}
+            <li class="plate">{{this.registration_plate}}</li>
+            {{/each}}
+        </ul>
+    </div>
+</form>
+
+<script>
+    setTimeout(function () {
+        document.querySelector('.red').innerHTML = '';
+    }, 3000);
+</script>
+
+
 
 
 
