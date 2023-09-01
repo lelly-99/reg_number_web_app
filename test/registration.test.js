@@ -1,46 +1,86 @@
 import assert from "assert";
 import registrationNumbers from "../factory-function/registration.js";
 
-describe("all from town", function () {
-    it('should be able to return registration numbers from cape town "CA"', function () {
-      var fromCapeTown = registrationNumbers();
-      
-      fromCapeTown.addRegistration('CA 124');
-      fromCapeTown.addRegistration('CA 567');
-      fromCapeTown.addRegistration('CA 345');
-      fromCapeTown.addRegistration('CL 456');
-      fromCapeTown.addRegistration('CL 341');
-      fromCapeTown.setTown('CA');
-  
-
-      assert.deepEqual(fromCapeTown.allFromTown(), ["CA 124", "CA 567", "CA 345"]);
+describe("Registrations Factory functions", function () {
+    it("should not accept duplicates", function () {
+      var regNumbers = registrationNumbers();
+      regNumbers.addRegistration("CA 1234");
+      regNumbers.addRegistration("CA 1234");
+      assert.deepEqual(regNumbers.getRegistrations(), ["CA 1234"]);
     });
-
-    it('should be able to return registration numbers from Bellville "CY"', function () {
-        var fromBellville = registrationNumbers();
-        
-        fromBellville.addRegistration('CY 124');
-        fromBellville.addRegistration('CY 567');
-        fromBellville.addRegistration('CY 345');
-        fromBellville.addRegistration('CL 456');
-        fromBellville.addRegistration('CA 341');
-        fromBellville.setTown('CY');
-    
-  
-        assert.deepEqual(fromBellville.allFromTown(), ["CY 124", "CY 567", "CY 345"]);
+    it("should add a new registration numbers to the list", function () {
+      var regNumbers = registrationNumbers();
+      regNumbers.addRegistration("CA 123");
+      regNumbers.addRegistration("CL 123");
+      regNumbers.addRegistration("CY 123");
+      assert.deepEqual(regNumbers.getRegistrations(), ["CA 123", "CL 123", "CY 123"]);
+    });
+    it("should return an error message for an empty registration", function () {
+      var regNumbers = registrationNumbers();
+      assert.equal(regNumbers.errorMessage(""), "Please enter a registration number");
+    });
+    it("should return an error message for an invalid registration", function () {
+      var regNumbers = registrationNumbers();
+      assert.equal(regNumbers.errorMessage("123 ABC"), "Please enter a valid registration number");
+    });
+    it("should return an error message for a registration from a town not available", function () {
+      var regNumbers = registrationNumbers();
+      assert.equal(regNumbers.errorMessage("ZA 123"), "Please enter a registration numbers for Cape Town, Bellville, Paarl or Stellenbosch");
+    });
+    it("should return the town code for Cape Town", function () {
+      var regNumbers = registrationNumbers();
+      assert.equal(regNumbers.fromWhere("Cape Town"), "CA");
+    });
+    it("should return the town code for Bellville", function () {
+      var regNumbers = registrationNumbers();
+      assert.equal(regNumbers.fromWhere("Bellville"), "CY");
+    });
+    it("should return the town code for Paarl", function () {
+      var regNumbers = registrationNumbers();
+      assert.equal(regNumbers.fromWhere("Paarl"), "CJ");
+    });
+    it("should return the town code for Stellenbosch", function () {
+      var regNumbers = registrationNumbers();
+      assert.equal(regNumbers.fromWhere("Stellenbosch"), "CL");
+    });
+      it("should return the town code for Cape Town", function () {
+        var regNumbers = registrationNumbers();
+        assert.equal(regNumbers.fromWhere("Cape Town"), "CA");
       });
-
-      it('should be able to return registration numbers from Paarl "CJ"', function () {
-        var fromPaarl = registrationNumbers();
-        
-        fromPaarl.addRegistration('CJ 124');
-        fromPaarl.addRegistration('CJ 567');
-        fromPaarl.addRegistration('CJ 345');
-        fromPaarl.addRegistration('CL 456');
-        fromPaarl.addRegistration('CL 341');
-        fromPaarl.setTown('CJ');
-    
   
-        assert.deepEqual(fromPaarl.allFromTown(), ["CJ 124", "CJ 567", "CJ 345"]);
+      it("should return the town code for Bellville", function () {
+        var regNumbers = registrationNumbers();
+        assert.equal(regNumbers.fromWhere("Bellville"), "CY");
       });
-  });
+  
+      it("should return the town code for Paarl", function () {
+        var regNumbers = registrationNumbers();
+        assert.equal(regNumbers.fromWhere("Paarl"), "CJ");
+      });
+  
+      it("should return the town code for Stellenbosch", function () {
+        var regNumbers = registrationNumbers();
+        assert.equal(regNumbers.fromWhere("Stellenbosch"), "CL");
+      });
+      it("should return the town code for a registration from Cape Town", function () {
+        var regNumbers = registrationNumbers();
+        assert.equal(regNumbers.getCode("CA 123"), "CA");
+      });
+  
+      it("should return the town code for a registration from Bellville", function () {
+        var regNumbers = registrationNumbers();
+        assert.equal(regNumbers.getCode("CY 456"), "CY");
+      });
+  
+      it("should return the town code for a registration from Paarl", function () {
+        var regNumbers = registrationNumbers();
+        assert.equal(regNumbers.getCode("CJ 789"), "CJ");
+      });
+  
+      it("should return the town code for a registration from Stellenbosch", function () {
+        var regNumbers = registrationNumbers();
+        assert.equal(regNumbers.getCode("CL 012"), "CL");
+      });
+  })
+
+  

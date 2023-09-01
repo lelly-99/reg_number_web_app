@@ -54,6 +54,8 @@ app.use(function (req, res, next) {
 app.get('/', mainRoute.getRegistration)
 app.post('/', mainRoute.postRegistration)
 app.post("/reset", mainRoute.reset);
+app.post('/filter', mainRoute.selectRegTowns)
+
 
 const PORT = process.env.PORT || 3007;
 app.listen(PORT, function () {
