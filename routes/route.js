@@ -9,11 +9,14 @@ export default function main(registrationFunction, data) {
   }
   async function postRegistration(req, res) {
     try {
-      const registrations = req.body.registration;
+      const registrations = req.body.registration.toUpperCase();
       const townId = await data.getTownId(registrationFunction.getCode(registrations))
       const error = registrationFunction.errorMessage(registrations)
+      const exist = registrationFunction.existReg()
       if(error){
         req.flash('error', error)
+      }else if(exist){
+        req.flash('error', exist)
       }else {
         await data.insertReg(registrations, townId.id)
       }
@@ -32,7 +35,7 @@ export default function main(registrationFunction, data) {
       }
       res.render('index', {filtered});
     } catch (err) {
-      console.log('Error reseting app', err)
+      console.log('Error', err)
   }
   }
   async function reset(req, res) {

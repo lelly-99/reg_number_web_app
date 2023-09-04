@@ -11,14 +11,10 @@ export default function registrationNumbers() {
   function addRegistration(registration) {
     var enteredRegistration = setRegistration(registration);
     if (!storeRegistrationNumbers.includes(enteredRegistration)) {
-      storeRegistrationNumbers.push(enteredRegistration);
+      return storeRegistrationNumbers.push(enteredRegistration); 
     }
   }
 
-  function getRegistrations() {
-    return storeRegistrationNumbers;
-  }
-  
   function errorMessage(registration) {
     var enteredRegistration = setRegistration(registration);
     if (!enteredRegistration) {
@@ -27,7 +23,12 @@ export default function registrationNumbers() {
         return 'Please enter a valid registration number';
     } else if (!/^(CL|CY|CJ|CA)/.test(enteredRegistration)) {
         return 'Please enter a registration numbers for Cape Town, Bellville, Paarl or Stellenbosch';
-    }
+    } 
+}
+function existReg(){
+  if(!addRegistration(registrationNum)){
+    return 'Registration number alredy exists'
+}
 }
 
 function fromWhere(townName){
@@ -44,16 +45,7 @@ function fromWhere(townName){
 }
 
 function getCode(registration) {
-  if (registration.startsWith('CA')) {
-    code = 'CA'
-  } else if (registration.startsWith('CL')) {
-    code = 'CL'
-  }else if (registration.startsWith('CY')) {
-    code = 'CY'
-  }else if (registration.startsWith('CJ')) {
-    code = 'CJ'
-  }
-  return code;
+  return registration.substring(0, 2); 
 }
 
   return {
@@ -62,6 +54,6 @@ function getCode(registration) {
     getCode,
     fromWhere,
     addRegistration,
-    getRegistrations,
+    existReg,
   }
 }
