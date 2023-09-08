@@ -6,7 +6,7 @@
       <p class="red">{{messages.error}}</p>
     </div>
     <div class="centerDiv">
-      <label for="enteredRegistrationNumber">Registration Number: </label>
+      <label for="enteredRegistrationNumber">Enter Registration number</label>
       <input
         type="text"
         name="registration"
@@ -15,16 +15,12 @@
         placeholder="CA 123 456"
       />
     </div>
-    <div class="button-container">
-      <div class="addButtons">
-        <button class="addButton" type="submit">Add</button>
-        <form action="/reset" method="POST" class="reset-button-form">
-          <button class="addButton resetButton" type="submit">Clear</button>
-        </form>
-      </div>
-    </div>
+      <button class="addButton add" type="submit">Add</button>
   </form>
-</div>
+   <form action="/reset" method="POST">
+    <button class="addButton clearButton" type="submit">Clear</button>
+  </form>
+</div>  
 <div class="centerDiv">
   <form action="/filter" method="POST">
     <select class="dropDown" name="towns">
@@ -37,6 +33,7 @@
     <button class="addButton" type="submit">Filter</button>
   </form>
 </div>
+<br>
 <div class="centerDiv">
   <p class="green">{{clear}}</p>
   <p class="reds">{{err}}</p>

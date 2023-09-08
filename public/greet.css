@@ -13,16 +13,11 @@ h1 {
     text-align: center;
 }
 
-div {
-    margin-top: 20px;
-}
-
 .centerDiv {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
 }
-
 .addButton, .showButton {
     padding: 3px 22px;
     border-radius: 3px;
@@ -56,39 +51,31 @@ select {
 }
 
 .button-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .button-container {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: center; 
-  }
-  
-  .addButtons {
-    display: flex;
+    display: inline;
     align-items: center;
   }
+
   
-  .addButton {
+  .addBbutton, .clearButton {
     padding: 3px 22px;
     border-radius: 3px;
     border: none;
     background-color: rgb(11, 149, 149);
     color: black;
-    margin: 0 5px; 
   }
   
-  .reset-button-form {
-    display: inline;
+  .clearButton {
+    margin-left: 100px; 
+    transform: translateY(-30px);
   }
   
-  .resetButton {
-    margin-right: 0;
-  }
+.add {
+    margin-top: 10px;
+}
+   
   
+
+
+
+
   
