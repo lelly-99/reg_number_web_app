@@ -60,25 +60,6 @@ describe("Registrations Factory functions", function () {
         var regNumbers = registrationNumbers();
         assert.equal(regNumbers.fromWhere("Stellenbosch"), "CL");
       });
-      it("should return the town code for a registration from Cape Town", function () {
-        var regNumbers = registrationNumbers();
-        assert.equal(regNumbers.getCode("CA 123"), "CA");
-      });
-  
-      it("should return the town code for a registration from Bellville", function () {
-        var regNumbers = registrationNumbers();
-        assert.equal(regNumbers.getCode("CY 456"), "CY");
-      });
-  
-      it("should return the town code for a registration from Paarl", function () {
-        var regNumbers = registrationNumbers();
-        assert.equal(regNumbers.getCode("CJ 789"), "CJ");
-      });
-  
-      it("should return the town code for a registration from Stellenbosch", function () {
-        var regNumbers = registrationNumbers();
-        assert.equal(regNumbers.getCode("CL 012"), "CL");
-      });
   })
 
   

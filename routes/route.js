@@ -10,7 +10,8 @@ export default function main(registrationFunction, data) {
   async function postRegistration(req, res) {
     try {
       const registrations = req.body.registration.toUpperCase();
-      const townId = await data.getTownId(registrationFunction.getCode(registrations))
+      const townCoode = await data.getCode(registrations)
+      const townId = await data.getTownId(townCoode)
       const error = registrationFunction.errorMessage(registrations)
       const exist = registrationFunction.existReg()
       if(error){
@@ -18,7 +19,7 @@ export default function main(registrationFunction, data) {
       }else if(exist){
         req.flash('error', exist)
       }else {
-        await data.insertReg(registrations, townId.id)
+        await data.insertReg(registrations, townId)
       }
       res.redirect("/");
     } catch (err) {
@@ -41,7 +42,8 @@ export default function main(registrationFunction, data) {
   async function reset(req, res) {
     try {
       await data.reset();
-      res.render('index', { clear: 'Registrations have been successfully cleared' });
+      req.flash('clear', 'Registratrions have been successfully cleared')
+      res.redirect('/')
     } catch (err) {
       console.log('Error reseting app', err)
   }
