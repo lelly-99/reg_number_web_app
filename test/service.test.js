@@ -80,6 +80,12 @@ describe('Greeting with routes database', function(){
         assert.equal(townId.id, 1);
     });
 
+    it("should be able to get town code", async function () {
+        const code = "CA";
+        const townCode = await data.getCode(code);
+        assert.equal(townCode.town_code, "CA");
+    });
+
     after(function () {
         pgp.end();
     });
