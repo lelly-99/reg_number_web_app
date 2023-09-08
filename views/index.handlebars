@@ -1,32 +1,32 @@
+
 <h1>Registration Numbers</h1>
-<form action="/" method="POST">
-  <div class="centerDiv">
-    <p class="red">{{messages.error}}</p>
-  </div>
-  <div class="centerDiv">
-    <label for="enteredRegistrationNumber">Registration Number: </label>
-    <input
-      type="text"
-      name="registration"
-      value=""
-      class="enteredRegistrationNumber"
-      placeholder="CA 123 456"
-    />
-  </div>
-  <div class="centerDiv">
-    <button class="addButton" type="submit">Add</button>
-  </div>
-</form>
-<form action="/reset" method="POST">
-  <div class="centerDiv">
-    <button class="addButton" type="submit">Clear</button>
-  </div>
-</form>
+<div class="centerDiv">
+  <form action="/" method="POST" class="button-form">
+    <div class="centerDiv">
+      <p class="red">{{messages.error}}</p>
+    </div>
+    <div class="centerDiv">
+      <label for="enteredRegistrationNumber">Registration Number: </label>
+      <input
+        type="text"
+        name="registration"
+        value=""
+        class="enteredRegistrationNumber"
+        placeholder="CA 123 456"
+      />
+    </div>
+    <div class="button-container">
+      <div class="addButtons">
+        <button class="addButton" type="submit">Add</button>
+        <form action="/reset" method="POST" class="reset-button-form">
+          <button class="addButton resetButton" type="submit">Clear</button>
+        </form>
+      </div>
+    </div>
+  </form>
+</div>
 <div class="centerDiv">
   <form action="/filter" method="POST">
-  <div class="centerDiv">
-    <p class="reds">{{messages.err}}</p>
-  </div>
     <select class="dropDown" name="towns">
       <option value="">Select Town</option>
       <option value="Cape Town">Cape Town</option>
@@ -37,22 +37,28 @@
     <button class="addButton" type="submit">Filter</button>
   </form>
 </div>
-  <div>
-  <ul class="d-flex flex-wrap">
-    {{#each registrations}}
-      <li class="plate">{{this.regnumber}}</li>
-    {{/each}}
-    {{#each filtered}}
-      <li class="plate">{{this.regnumber}}</li>
-    {{/each}}
-  </ul>
+<div class="centerDiv">
+  <p class="green">{{clear}}</p>
+  <p class="reds">{{err}}</p>
 </div>
+<ul class="d-flex flex-wrap">
+  {{#each registrations}}
+    <li class="plate">{{this.regnumber}}</li>
+  {{/each}}
+  {{#each filtered}}
+    <li class="plate">{{this.regnumber}}</li>
+  {{/each}}
+</ul>
 <script>
   setTimeout(function () { document.querySelector('.red').innerHTML = ''; },
   3000);
 
+   setTimeout(function () { document.querySelector('.green').innerHTML = ''; },
+  3000);
+
   setTimeout(function () { document.querySelector('.reds').innerHTML = ''; },
   3000);
-</script>
+</script> 
+
 
 

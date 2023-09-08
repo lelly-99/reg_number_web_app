@@ -54,6 +54,6 @@ function getCode(registration) {
     getCode,
     fromWhere,
     addRegistration,
-    existReg,
+    existReg
   }
 }

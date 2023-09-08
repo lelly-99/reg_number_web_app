@@ -26,15 +26,15 @@ describe('Greeting with routes database', function(){
         await data.reset();
     });
 
-    it("should be able to insert and retrieve registrations", async function () {
-        await data.insertReg("CA 1235", 1); 
+    it("should be able to insert registration numbers", async function () {
+        await data.insertReg("CA 1235", 1);  
         const registrations = await data.getReg();
         assert.deepEqual(registrations[0], {
             regnumber: 'CA 1235'
         });
     });
 
-    it('should insert and retrieve', async function() {
+    it('should be able to get the registration numbers', async function() {
         await data.insertReg("CA 1234");
         const registrations = await data.getReg();
         assert.deepEqual(registrations, [
@@ -44,7 +44,7 @@ describe('Greeting with routes database', function(){
         ]);
     });
 
-    it("should be able to retrieve a town's registrations", async function () {
+    it("should be able to filter a town", async function () {
         await data.insertReg("CA 123", 1); 
         const townCode = "CA";
         const registrations = await data.filterRegs(townCode);
@@ -63,12 +63,25 @@ describe('Greeting with routes database', function(){
         assert.deepEqual(registrations, []);
     });
 
+    it("should be able to filter registrations", async function () {
+        await data.insertReg("CA 123", 1);
+        const townCode = "CA";
+        const registrations = await data.filterRegs(townCode);
+        assert.deepEqual(registrations, [
+            {
+                regnumber: 'CA 123'
+            }
+        ]);
+    });
+
+    it("should be able to get town id", async function () {
+        const townCode = "CA";
+        const townId = await data.getTownId(townCode);
+        assert.equal(townId.id, 1);
+    });
+
     after(function () {
         pgp.end();
     });
 });
-
-
-
-
 

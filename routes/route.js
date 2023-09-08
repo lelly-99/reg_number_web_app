@@ -30,10 +30,10 @@ export default function main(registrationFunction, data) {
       const townselect = req.body.towns
       const filtered = await data.filterRegs(registrationFunction.fromWhere(townselect))
       if(!filtered.length){
-        req.flash('err', 'There is no registration for the selected town')
-        res.redirect('/');
+        res.render('index', { err: 'There is no registration for the selected town' });
+      }else {
+        res.render('index', {filtered});
       }
-      res.render('index', {filtered});
     } catch (err) {
       console.log('Error', err)
   }
@@ -41,7 +41,7 @@ export default function main(registrationFunction, data) {
   async function reset(req, res) {
     try {
       await data.reset();
-      res.redirect('/');
+      res.render('index', { clear: 'Registrations have been successfully cleared' });
     } catch (err) {
       console.log('Error reseting app', err)
   }
@@ -53,6 +53,10 @@ export default function main(registrationFunction, data) {
     selectRegTowns,
   };
 }
+
+
+
+
 
 
 
