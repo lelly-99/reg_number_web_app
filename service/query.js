@@ -13,7 +13,11 @@ const query = (db) => {
   const filterRegs = async (town_code) => {
     return await db.manyOrNone("SELECT registrations.regNumber FROM registrations JOIN towns ON registrations.townId = towns.id WHERE town_code = $1", [town_code])
   }
-  
+
+  // const getCode = async (town_code) => {
+  //   return await db.manyOrNone("SELECT town_code FROM towns WHERE town_code = $1" [town_code])
+  // }
+
   const reset = async () => {
     await db.none("delete from registrations");
   };
