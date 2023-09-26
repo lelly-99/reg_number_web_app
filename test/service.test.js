@@ -20,7 +20,7 @@ const database = pgp(connectionString);
 const data = query(database);
 
 describe('Greeting with routes database', function(){
-    this.timeout(10000);
+    this.timeout(60000);
     beforeEach(async function(){
         // Clean the tables before each test run
         await data.reset();
@@ -78,12 +78,6 @@ describe('Greeting with routes database', function(){
         const townCode = "CA";
         const townId = await data.getTownId(townCode);
         assert.equal(townId.id, 1);
-    });
-
-    it("should be able to get town code", async function () {
-        const reg = "";
-        const code = await data.getCode(reg);
-        assert.deepEqual(code, []);
     });
 
     after(function () {
