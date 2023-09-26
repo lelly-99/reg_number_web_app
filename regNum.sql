@@ -7,7 +7,7 @@ CREATE TABLE towns (
 
 CREATE TABLE registrations (
     regID SERIAL PRIMARY KEY,
-    regNumber varchar(20) NOT NULL,
+    regNumber varchar(20) NOT NULL UNIQUE,
     townID int REFERENCES towns(ID)
 );
 

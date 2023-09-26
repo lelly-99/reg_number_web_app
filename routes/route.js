@@ -7,47 +7,52 @@ export default function main(registrationFunction, data) {
       console.log("error", err);
     }
   }
+
   async function postRegistration(req, res) {
     try {
       const registrations = req.body.registration.toUpperCase();
-      const townCoode = await data.getCode(registrations)
-      const townId = await data.getTownId(townCoode)
-      const error = registrationFunction.errorMessage(registrations)
-      const exist = registrationFunction.existReg()
-      if(error){
-        req.flash('error', error)
-      }else if(exist){
-        req.flash('error', exist)
-      }else {
-        await data.insertReg(registrations, townId)
+      const townId = await data.getTownId(registrationFunction.getCode(registrations));
+      const error = registrationFunction.errorMessage(registrations);
+      const regChecking = await data.checkReg(registrations)
+      if(regChecking.length > 0 ){
+        req.flash("error", "Registration already exists");
+      }
+      if (error) {
+        req.flash("error", error);
+      } else {
+        await data.insertReg(registrations, townId.id);
       }
       res.redirect("/");
     } catch (err) {
-      console.log("Error", err);
+      res.redirect("/");
     }
   }
+
   async function selectRegTowns(req, res) {
     try {
-      const townselect = req.body.towns
-      const filtered = await data.filterRegs(registrationFunction.fromWhere(townselect))
-      if(!filtered.length){
-        res.render('index', { err: 'There is no registration for the selected town' });
-      }else {
-        res.render('index', {filtered});
+      const townselect = req.body.towns;
+      const filtered = await data.filterRegs(registrationFunction.fromWhere(townselect));
+      if (!townselect) {
+      req.flash("err", "Please select a town");
+      }else if (filtered.length <= 0 ) {
+        req.flash("err", "There is no registration for the selected town");
       }
+      res.render("index", { filtered, err: req.flash("err")  });
     } catch (err) {
-      console.log('Error', err)
+      console.log("Error resetting app", err);
+    }
   }
-  }
+
   async function reset(req, res) {
     try {
       await data.reset();
-      req.flash('clear', 'Registratrions have been successfully cleared')
-      res.redirect('/')
+      req.flash("clear", "Registrations have been successfully cleared");
+      res.redirect("/");
     } catch (err) {
-      console.log('Error reseting app', err)
+      console.log("Error resetting app", err);
+    }
   }
-  }
+
   return {
     postRegistration,
     getRegistration,

@@ -36,7 +36,8 @@
 <br>
 <div class="centerDiv">
   <p class="green">{{messages.clear}}</p>
-  <p class="reds">{{err}}</p>
+  <p class="reds">{{messages.err}}</p>
+  <p class="reds bbbb">{{err}}</p>
 </div>
 <ul class="d-flex flex-wrap">
   {{#each registrations}}
@@ -54,6 +55,9 @@
   3000);
 
   setTimeout(function () { document.querySelector('.reds').innerHTML = ''; },
+  3000);
+
+  setTimeout(function () { document.querySelector('.bbbb').innerHTML = ''; },
   3000);
 </script> 
 

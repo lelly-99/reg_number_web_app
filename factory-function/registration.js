@@ -43,11 +43,17 @@ function fromWhere(townName){
   }
   return code
 }
+
+function getCode(registration) {
+  return registration.substring(0, 2); 
+}
+
   return {
     setRegistration,
     errorMessage,
+    getCode,
     fromWhere,
     addRegistration,
-    existReg
+    existReg,
   }
 }
