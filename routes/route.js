@@ -27,22 +27,25 @@ export default function main(registrationFunction, data) {
       res.redirect("/");
     }
   }
-
   async function selectRegTowns(req, res) {
     try {
       const townselect = req.body.towns;
-      const filtered = await data.filterRegs(registrationFunction.fromWhere(townselect));
-      if (!townselect) {
-      req.flash("err", "Please select a town");
-      }else if (filtered.length <= 0 ) {
-        req.flash("err", "There is no registration for the selected town");
+      let show;
+      if (townselect === "showAll") {
+        show = await data.getReg();
+      } else if (townselect === "") {
+        req.flash("err", "Please select a town");
+      } else {
+        show = await data.filterRegs(registrationFunction.fromWhere(townselect));
       }
-      res.render("index", { filtered, err: req.flash("err")  });
+      if (show.length <= 0) {
+        req.flash("err", "There are no registrations for the selected option");
+      }
+      res.render("index", { filtered: show, err: req.flash("err") });
     } catch (err) {
-      console.log("Error resetting app", err);
+      res.render("index", { filtered: [], err: req.flash("err") });
     }
   }
-
   async function reset(req, res) {
     try {
       await data.reset();
